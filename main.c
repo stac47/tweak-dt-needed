@@ -20,6 +20,7 @@ int main(int argc, const char *argv[])
     }
     *(void **) (&funcp) = dlsym(libHandle, "stac_svc_decorate");
     err = dlerror();
+    printf("dlsym: %s\n", err);
     if (funcp == NULL) {
         exit(1);
     }
@@ -27,5 +28,7 @@ int main(int argc, const char *argv[])
     (*funcp)();
 
     dlclose(libHandle);
+
+    stac_common_print();
     return 0;
 }
