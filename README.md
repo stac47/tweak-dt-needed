@@ -1,4 +1,4 @@
-#DT_NEEDED Tweak
+# DT_NEEDED Tweak
 
 In Python 3.8, the C extensions are no more linked with `libpython` so that
 there is no problem importing a C extension module from a statically linked
@@ -11,9 +11,9 @@ benefit for python (it allows to debug the same version of the library when
 loaded by a module), but I was wondering how this could give a performance
 boost at program startup and at function call.
 
-##Test
+## Test
 
-###Before
+### Before
 
 ```
 main ------------- dlopen --------------> libsvc.so
@@ -24,7 +24,7 @@ main ------------- dlopen --------------> libsvc.so
 `main` will call a function in `libcommon.so` and `dlopen` the shared library
 `libsvc.so` and call the same function defined in `libcommon.so`.
 
-###After
+### After
 
 Same scenario without linking `libsvc.so` with `libcommon.so`. This results in
 a missing `DT_NEEDED` entry. As a matter of fact, if the main does not declare
@@ -38,7 +38,7 @@ main ------------- dlopen --------------> libsvc.so
  L DT_NEEDED libcommon.so
 ```
 
-##Results
+## Results
 
 The only I could see was that when the `libsvc.so` is `dlopen`ed, the dynamic
 linker will have to perform a lookup of weak symbols that need to be relocated
